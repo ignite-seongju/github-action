@@ -2,7 +2,7 @@ name: new pr
 
 on:
   pull_request:
-    types: [labeled]
+    types: [opened, labeled]
 
 jobs:
   send_message:
