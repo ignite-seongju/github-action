@@ -1,0 +1,30 @@
+name: new pr
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  send_message:
+    runs-on: ubuntu-latest
+    steps:
+      # 현재 PR 정보 받아오기
+      - uses: 8BitJonny/gh-get-current-pr@2.2.0
+        id: PR
+
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              attachments: [{
+                text: `:pray: New Pull Request ${} Opened :pray:
+                신규 <${PR_URL}|PR> ${PR_TITLE}이 생성되었습니다.
+                by ${{ github.event.commit.commit.author.name }}
+                `
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+          PR_TITLE: ${{ steps.PR.outputs.pr_title }}
+          PR_URL: ${{ steps.PR.outputs.pr_url }}
