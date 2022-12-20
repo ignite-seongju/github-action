@@ -18,7 +18,7 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                text: `:pray: New Pull Request ${} Opened :pray:
+                text: `:pray: New Pull Request Opened :pray:
                 신규 <${PR_URL}|PR> ${PR_TITLE}이 생성되었습니다.
                 by ${{ github.event.commit.commit.author.name }}
                 `
