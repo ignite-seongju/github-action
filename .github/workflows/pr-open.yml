@@ -8,23 +8,11 @@ jobs:
   send_message:
     runs-on: ubuntu-latest
     steps:
-      # 현재 PR 정보 받아오기
-      - uses: 8BitJonny/gh-get-current-pr@2.2.0
-        id: PR
-
-      - uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          custom_payload: |
-            {
-              attachments: [{
-                text: `:pray: New Pull Request ${} Opened :pray:
-                신규 <${PR_URL}|PR> ${PR_TITLE}이 생성되었습니다.
-                by ${{ github.event.commit.commit.author.name }}
-                `
-              }]
-            }
+      - name: Notify slack pr open
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL_GITHUB_ACTION }}
-          PR_TITLE: ${{ steps.PR.outputs.pr_title }}
-          PR_URL: ${{ steps.PR.outputs.pr_url }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
+          PULL_REQUEST_AUTHOR_NAME: ${{ github.event.pull_request.user.login }}
+          PULL_REQUEST_URL: ${{ github.event.pull_request.html_url }}
+          PULL_REQUEST_BODY: ${{ github.event.pull_request.body }}
+        uses: jun3453/slack-pr-open-notification-action@v1.3.0
