@@ -25,6 +25,6 @@ jobs:
               }]
             }
         env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL_GITHUB_ACTION }}
           PR_TITLE: ${{ steps.PR.outputs.pr_title }}
           PR_URL: ${{ steps.PR.outputs.pr_url }}
